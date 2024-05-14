@@ -1,0 +1,1 @@
+# goit-qaa-hw-10
