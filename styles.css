@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  background-image: radial-gradient(1px at 1px, #757575 1px, transparent 1px);
+}
+
+#search-box {
+  width: 300px;
+  height: 40px;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.country-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.country-list li {
+  margin-bottom: 10px;
+}
+
+.country-info {
+  text-align: center;
+}
+
+.country-info img {
+  margin-bottom: 10px;
+}
