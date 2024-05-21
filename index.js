@@ -1,22 +1,21 @@
-import './css/styles.css';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import debounce from 'lodash.debounce';
-import { fetchCountries } from './fetchCountries'; 
+import "./css/styles.css";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+import debounce from "lodash.debounce";
+import { fetchCountries } from "./fetchCountries";
 
-const DEBOUNCE_DELAY = 300; 
+const DEBOUNCE_DELAY = 300;
 
 const refs = {
-  searchEl : document.querySelector('#search-box'),
-  countryInfo : document.querySelector('.country-info'),
-  countryList : document.querySelector('.country-list'),
+  searchEl: document.querySelector("#search-box"),
+  countryInfo: document.querySelector(".country-info"),
+  countryList: document.querySelector(".country-list"),
 };
 
 // const country_list = document.querySelector('.country-list');
 
+const clearMarkup = (ref) => (ref.innerHTML = "");
 
-const clearMarkup = ref => (ref.innerHTML = '');
-
-const inputHandler = e => {
+const inputHandler = (e) => {
   const textInput = e.target.value.trim();
 
   if (!textInput) {
@@ -25,27 +24,27 @@ const inputHandler = e => {
     return;
   }
 
-  fetchCountries(textInput) 
-    .then(data => {
+  fetchCountries(textInput)
+    .then((data) => {
       console.log(data);
       if (data.length > 10) {
         clearMarkup(refs.countryList);
         clearMarkup(refs.countryInfo);
         Notify.info(
-          'Too many matches found. Please enter a more specific name'
+          "Too many matches found. Please enter a more specific name"
         );
         return;
       }
       renderMarkup(data);
     })
-    .catch(err => {
+    .catch((err) => {
       clearMarkup(refs.countryList);
       clearMarkup(refs.countryInfo);
-      Notify.failure('Oops..., there is no country with that name');
+      Notify.failure("Oops..., there is no country with that name");
     });
 };
 
-const renderMarkup = data => {
+const renderMarkup = (data) => {
   if (data.length === 1) {
     clearMarkup(refs.countryList);
     const markupInfo = createInfoMarkup(data);
@@ -57,17 +56,16 @@ const renderMarkup = data => {
   }
 };
 
-const createListMarkup = data => {
+const createListMarkup = (data) => {
   return data
     .map(
       ({ name, flags }) =>
         `<li><img src="${flags.png}" alt="${name.official}" width="60" height="40">${name.official}</li>`
     )
-    .join('');
-    
+    .join("");
 };
 
-const createInfoMarkup = data => {
+const createInfoMarkup = (data) => {
   return data.map(
     ({ name, capital, population, flags, languages }) =>
       `<img src="${flags.png}" alt="${name.official}" width="200" height="100">
@@ -78,4 +76,4 @@ const createInfoMarkup = data => {
   );
 };
 
-refs.searchEl.addEventListener('input', debounce(inputHandler, DEBOUNCE_DELAY));
+refs.searchEl.addEventListener("input", debounce(inputHandler, DEBOUNCE_DELAY));
